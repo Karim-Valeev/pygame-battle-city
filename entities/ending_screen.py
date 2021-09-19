@@ -19,7 +19,6 @@ def letter_filler():
 
 
 class EndingScreen(NonGameScreen):
-
     def __init__(self, screen, win, score):
         super().__init__(screen)
         self.screen = screen
@@ -32,10 +31,10 @@ class EndingScreen(NonGameScreen):
         font1 = pygame.font.Font(None, 40)
         font2 = pygame.font.Font(None, 35)
         if self.win:
-            ending_phrase = 'VICTORY!'
+            ending_phrase = "VICTORY!"
             color = GREEN
         else:
-            ending_phrase = 'GAME OVER!'
+            ending_phrase = "GAME OVER!"
             color = RED
 
         while True:
@@ -43,11 +42,26 @@ class EndingScreen(NonGameScreen):
 
             self.draw_text(ending_phrase, font1, color, (325, 212))
 
-            question = 'Do you want to save your name?'
-            self.draw_text(question, font2, WHITE, (325, 375), )
+            question = "Do you want to save your name?"
+            self.draw_text(
+                question,
+                font2,
+                WHITE,
+                (325, 375),
+            )
 
-            self.draw_text('YES', font2, WHITE, (250, 538), )
-            self.draw_text('NO', font2, WHITE, (400, 538), )
+            self.draw_text(
+                "YES",
+                font2,
+                WHITE,
+                (250, 538),
+            )
+            self.draw_text(
+                "NO",
+                font2,
+                WHITE,
+                (400, 538),
+            )
 
             if self.cursor_for_YN == 0:
                 cursor_frame = pygame.Rect(198, 508, 105, 60)

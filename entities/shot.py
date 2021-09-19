@@ -4,7 +4,7 @@ from entities.level import Point, Tile
 
 class Shot(Tile):
     def __init__(self, point, angle, owner):
-        super().__init__('shot', point)
+        super().__init__("shot", point)
         self.rotate(angle)
         self.size = 1
         # If owner = 0, then player's shot
@@ -31,8 +31,12 @@ class Shot(Tile):
         elif self.angle == 270 or self.angle == 90:
             x = self.round(x)
             point1, point2 = self.check_horiz(objects, x, y)
-        if not (point1 is None) and not(objects[point1] == 'empty')\
-                or not (point2 is None) and not(objects[point2] == 'empty'):
+        if (
+            not (point1 is None)
+            and not (objects[point1] == "empty")
+            or not (point2 is None)
+            and not (objects[point2] == "empty")
+        ):
             delete_shot.append(self)
             add_delete_point(point1, delete_point, objects)
             add_delete_point(point2, delete_point, objects)
@@ -52,7 +56,7 @@ class Shot(Tile):
 
     def check_collision_with_shot(self, del_shot, shots_list):
         for shot in shots_list:
-            if self.__contains_in_point(shot) and not (shot == self) and not(shot in del_shot):
+            if self.__contains_in_point(shot) and not (shot == self) and not (shot in del_shot):
                 del_shot.append(shot)
                 del_shot.append(self)
         return del_shot
@@ -93,8 +97,12 @@ class Shot(Tile):
         return lies_in_tile(tile, self) or lies_in_tile(self, tile)
 
     def find_collision(self, level, player, delete_shot, delete_point_p):
-        if self.position.X < -1 or self.position.X > level.width or \
-                self.position.Y < -1 or self.position.Y > level.height:
+        if (
+            self.position.X < -1
+            or self.position.X > level.width
+            or self.position.Y < -1
+            or self.position.Y > level.height
+        ):
             delete_shot.append(self)
             return delete_shot, delete_point_p
         delete_shot, delete_point_p = self.check_collision_with_obj(delete_shot, delete_point_p, level.map_objects)
@@ -105,12 +113,14 @@ class Shot(Tile):
 
 
 def lies_in_tile(tile1, tile2):
-    return tile1.position.X <= tile2.position.X <= tile1.position.X + tile1.size and \
-           tile1.position.Y <= tile2.position.Y <= tile1.position.Y + tile1.size
+    return (
+        tile1.position.X <= tile2.position.X <= tile1.position.X + tile1.size
+        and tile1.position.Y <= tile2.position.Y <= tile1.position.Y + tile1.size
+    )
 
 
 def add_delete_point(point, delete_point, objects):
     if point is None:
         return
-    if not (objects[point] == 'stone'):
+    if not (objects[point] == "stone"):
         delete_point.append(point)

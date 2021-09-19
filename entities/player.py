@@ -9,7 +9,7 @@ from entities.tank import Tank
 
 class Player(Tile, Tank):
     def __init__(self, x, y):
-        super().__init__('player', Point(x, y))
+        super().__init__("player", Point(x, y))
         self.score = 0
         self.count_enemies_killed = 0
         self.size = 1
@@ -27,19 +27,49 @@ class Player(Tile, Tank):
     def move(self, event, level, global_timer):
         movement_speed = 0.25
         if event.key == pygame.K_RIGHT:
-            self.update_position(90, movement_speed, 'h', math.ceil(self.position.X + self.size + movement_speed),
-                                 Level.width,
-                                 math.ceil(self.position.X + movement_speed + self.size), self.position.Y, level)
+            self.update_position(
+                90,
+                movement_speed,
+                "h",
+                math.ceil(self.position.X + self.size + movement_speed),
+                Level.width,
+                math.ceil(self.position.X + movement_speed + self.size),
+                self.position.Y,
+                level,
+            )
         elif event.key == pygame.K_LEFT:
-            self.update_position(270, -movement_speed, 'h', -movement_speed, self.position.X - movement_speed,
-                                 math.floor(self.position.X - movement_speed), self.position.Y, level)
+            self.update_position(
+                270,
+                -movement_speed,
+                "h",
+                -movement_speed,
+                self.position.X - movement_speed,
+                math.floor(self.position.X - movement_speed),
+                self.position.Y,
+                level,
+            )
         elif event.key == pygame.K_UP:
-            self.update_position(0, -movement_speed, 'v', -movement_speed, self.position.Y - movement_speed,
-                                 self.position.X, math.floor(self.position.Y - movement_speed), level)
+            self.update_position(
+                0,
+                -movement_speed,
+                "v",
+                -movement_speed,
+                self.position.Y - movement_speed,
+                self.position.X,
+                math.floor(self.position.Y - movement_speed),
+                level,
+            )
         elif event.key == pygame.K_DOWN:
-            self.update_position(180, movement_speed, 'v', math.ceil(self.position.Y + self.size + movement_speed),
-                                 Level.height,
-                                 self.position.X, math.ceil(self.position.Y + self.size + movement_speed), level)
+            self.update_position(
+                180,
+                movement_speed,
+                "v",
+                math.ceil(self.position.Y + self.size + movement_speed),
+                Level.height,
+                self.position.X,
+                math.ceil(self.position.Y + self.size + movement_speed),
+                level,
+            )
         elif event.key == pygame.K_SPACE:
             self.shoot(level, global_timer)
 
@@ -47,7 +77,7 @@ class Player(Tile, Tank):
         self.rotate(should_angle)
         if condition1 < condition2:
             no_collision = True
-            if method_name == 'h' and empty_next_tile_horiz(self, x, y, level):
+            if method_name == "h" and empty_next_tile_horiz(self, x, y, level):
                 test_rect = pygame.Rect((self.position.X + movement_speed) * 25, self.position.Y * 25 + 50, 26, 26)
                 for enemy in level.enemy_list:
                     enemy.rect = pygame.Rect(enemy.position.X * 25, enemy.position.Y * 25 + 50, 50, 50)
@@ -56,7 +86,7 @@ class Player(Tile, Tank):
                         break
                 if no_collision:
                     self.position.X += movement_speed
-            elif method_name == 'v' and empty_next_tile_vert(self, x, y, level):
+            elif method_name == "v" and empty_next_tile_vert(self, x, y, level):
                 test_rect = pygame.Rect(self.position.X * 25, (self.position.Y + movement_speed) * 25 + 50, 26, 26)
                 for enemy in level.enemy_list:
                     enemy.rect = pygame.Rect(enemy.position.X * 25, enemy.position.Y * 25 + 50, 50, 50)

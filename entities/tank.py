@@ -14,4 +14,4 @@ class Tank:
 
     @abstractmethod
     def shoot(self, level, global_timer):
-        """ Выстрелить """
+        """Выстрелить"""

@@ -20,9 +20,8 @@ def find_random_path(angle):
 
 
 class Enemy(Tile, Tank):
-
     def __init__(self, x=None, y=None):
-        super().__init__('enemy', Point(x, y))
+        super().__init__("enemy", Point(x, y))
         self.alive = True
         self.size = 1
         self.shoot_timer = t.time()
@@ -45,23 +44,49 @@ class Enemy(Tile, Tank):
 
         flag = False
         if self.angle == 90:
-            flag = self.update_position(movement_speed, 'h',
-                                        math.ceil(self.position.X + self.size + movement_speed),
-                                        Level.width,
-                                        math.ceil(self.position.X + movement_speed + self.size), self.position.Y, level,
-                                        player)
+            flag = self.update_position(
+                movement_speed,
+                "h",
+                math.ceil(self.position.X + self.size + movement_speed),
+                Level.width,
+                math.ceil(self.position.X + movement_speed + self.size),
+                self.position.Y,
+                level,
+                player,
+            )
         elif self.angle == 270:
-            flag = self.update_position(-movement_speed, 'h', -movement_speed, self.position.X - movement_speed,
-                                        math.floor(self.position.X - movement_speed), self.position.Y, level, player)
+            flag = self.update_position(
+                -movement_speed,
+                "h",
+                -movement_speed,
+                self.position.X - movement_speed,
+                math.floor(self.position.X - movement_speed),
+                self.position.Y,
+                level,
+                player,
+            )
         elif self.angle == 0:
-            flag = self.update_position(-movement_speed, 'v', -movement_speed, self.position.Y - movement_speed,
-                                        self.position.X, math.floor(self.position.Y - movement_speed), level, player)
+            flag = self.update_position(
+                -movement_speed,
+                "v",
+                -movement_speed,
+                self.position.Y - movement_speed,
+                self.position.X,
+                math.floor(self.position.Y - movement_speed),
+                level,
+                player,
+            )
         elif self.angle == 180:
-            flag = self.update_position(movement_speed, 'v',
-                                        math.ceil(self.position.Y + self.size + movement_speed),
-                                        Level.height,
-                                        self.position.X, math.ceil(self.position.Y + self.size + movement_speed), level,
-                                        player)
+            flag = self.update_position(
+                movement_speed,
+                "v",
+                math.ceil(self.position.Y + self.size + movement_speed),
+                Level.height,
+                self.position.X,
+                math.ceil(self.position.Y + self.size + movement_speed),
+                level,
+                player,
+            )
 
         if not flag:
             if counter == 3:
@@ -75,13 +100,16 @@ class Enemy(Tile, Tank):
         self.rotate_enemy()
         self.previous_angle = self.angle
         if condition1 < condition2:
-            if method_name == 'h' and empty_next_tile_horiz(self, x, y, level):
+            if method_name == "h" and empty_next_tile_horiz(self, x, y, level):
                 self.rect = pygame.Rect((self.position.X + movement_speed * 2) * 25, self.position.Y * 25 + 50, 26, 26)
                 if not pygame.sprite.collide_rect(self, player):
                     self.position.X += movement_speed
                     return True
-            elif method_name == 'v' and empty_next_tile_vert(self, x, y, level) and not pygame.sprite.collide_rect(self,
-                                                                                                                   player):
+            elif (
+                method_name == "v"
+                and empty_next_tile_vert(self, x, y, level)
+                and not pygame.sprite.collide_rect(self, player)
+            ):
                 self.rect = pygame.Rect(self.position.X * 25, (self.position.Y + movement_speed * 2) * 25 + 50, 26, 26)
                 if not pygame.sprite.collide_rect(self, player):
                     self.position.Y += movement_speed

@@ -39,7 +39,7 @@ def main():
         status_frame = pygame.Rect(0, 0, 650, 50)
         pygame.draw.rect(screen, WHITE, status_frame, 3)
         if game_started:
-            level = Level('%s.txt' % level_count)
+            level = Level("%s.txt" % level_count)
             next_level = False
             motion, player_event = False, None
             point_buff = []
@@ -49,8 +49,11 @@ def main():
                 screen.fill(BLACK)
 
                 check_enemy_alive(level, player)
-                if t.time() - enemy_spawn_timer > 2.5 and (
-                        len(level.enemy_list) < 4) and (len(level.enemy_list) + player.count_enemies_killed < 10):
+                if (
+                    t.time() - enemy_spawn_timer > 2.5
+                    and (len(level.enemy_list) < 4)
+                    and (len(level.enemy_list) + player.count_enemies_killed < 10)
+                ):
                     enemy_spawn_timer = t.time()
                     add_enemy_and_update_time(level, player)
 
@@ -103,7 +106,7 @@ def main():
                 clock.tick(FPS)
         else:
             if next_level:
-                print('You are now on level', str(level_count) + '!')
+                print("You are now on level", str(level_count) + "!")
                 game_started = True
             else:
                 # Menu launches if game ended or not started
@@ -125,7 +128,7 @@ def main():
 def add_enemy_and_update_time(level, player):
     point = level.get_free_spawn_position(player)
     level.enemy_list.append(Enemy(point.X, point.Y))
-    print('Enemy appeared')
+    print("Enemy appeared")
 
 
 def update_player_score(level, player, screen, level_count, max_level_count):
@@ -160,9 +163,9 @@ def check_enemy_alive(level, player):
         if not level.enemy_list[i - 1].alive:
             # player.count_enemies_killed += 1
             del level.enemy_list[i - 1]
-            print('Enemy died')
+            print("Enemy died")
         i -= 1
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

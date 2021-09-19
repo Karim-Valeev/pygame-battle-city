@@ -24,14 +24,14 @@ class Point:
         return math.isclose(self.X, other.X, rel_tol=EPS) and math.isclose(self.Y, other.Y, rel_tol=EPS)
 
     def __str__(self):
-        return str(self.X) + ' : ' + str(self.Y)
+        return str(self.X) + " : " + str(self.Y)
 
 
 class Tile(pygame.sprite.Sprite):
     def __init__(self, name_img, point):
         pygame.sprite.Sprite.__init__(self)
         scale = 25
-        if name_img == 'eagle' or name_img == 'player' or name_img == 'enemy' or name_img == 'shot':
+        if name_img == "eagle" or name_img == "player" or name_img == "enemy" or name_img == "shot":
             scale *= 2
         self.image = transform_img(name_img, scale)
         self.position = point
@@ -56,30 +56,30 @@ class Level:
 
     def get_map(self):
         map_objects = {}
-        with open(os.path.join('levels', self.name), 'r') as level:
+        with open(os.path.join("levels", self.name), "r") as level:
             lines = level.readlines()
             for i in range(len(lines)):
                 line = lines[i]
                 # последний символ - перенос строки
                 for j in range(len(line) - 1):
-                    if line[j] == '.':
+                    if line[j] == ".":
                         continue
-                    tile_name = ''
-                    if line[j] == 'B':
-                        tile_name = 'brick'
-                    if line[j] == 'S':
-                        tile_name = 'stone'
-                    if line[j] == 'E':
-                        tile_name = 'eagle'
-                    if line[j] == 'P':
-                        tile_name = 'empty'
-                    if tile_name == '':
-                        raise Exception('This element does not contain in our base')
+                    tile_name = ""
+                    if line[j] == "B":
+                        tile_name = "brick"
+                    if line[j] == "S":
+                        tile_name = "stone"
+                    if line[j] == "E":
+                        tile_name = "eagle"
+                    if line[j] == "P":
+                        tile_name = "empty"
+                    if tile_name == "":
+                        raise Exception("This element does not contain in our base")
                     map_objects[Point(j, i)] = tile_name
         return map_objects
 
     def check_eagle(self):
-        return 'eagle' in self.map_objects.values()
+        return "eagle" in self.map_objects.values()
 
     def add_none_point(self, point, point_buff):
         points = [None, None, None, None]
@@ -88,7 +88,7 @@ class Level:
         points[2] = Point(point.X, point.Y + 1)
         points[3] = Point(point.X + 1, point.Y + 1)
         for i in range(len(points)):
-            self.map_objects[points[i]] = 'None'
+            self.map_objects[points[i]] = "None"
             point_buff.append(points[i])
 
     def delete_point(self, point):
@@ -156,19 +156,23 @@ class Level:
 
 
 def empty_next_tile_horiz(tile, x, y, level):
-    return not (Point(x, y) in level.map_objects or
-                Point(x, math.floor(y)) in level.map_objects or
-                Point(x, math.ceil(y)) in level.map_objects or
-                Point(x, math.ceil(y + tile.size)) in level.map_objects)
+    return not (
+        Point(x, y) in level.map_objects
+        or Point(x, math.floor(y)) in level.map_objects
+        or Point(x, math.ceil(y)) in level.map_objects
+        or Point(x, math.ceil(y + tile.size)) in level.map_objects
+    )
 
 
 def empty_next_tile_vert(tile, x, y, level):
-    return not (Point(x, y) in level.map_objects or
-                Point(math.floor(x), y) in level.map_objects or
-                Point(math.ceil(x), y) in level.map_objects or
-                Point(math.ceil(x + tile.size), y) in level.map_objects)
+    return not (
+        Point(x, y) in level.map_objects
+        or Point(math.floor(x), y) in level.map_objects
+        or Point(math.ceil(x), y) in level.map_objects
+        or Point(math.ceil(x + tile.size), y) in level.map_objects
+    )
 
 
 def transform_img(name_img, scale):
-    img = pygame.image.load(os.path.join('sprites', name_img + '.png'))
+    img = pygame.image.load(os.path.join("sprites", name_img + ".png"))
     return pygame.transform.scale(img, (scale, scale))

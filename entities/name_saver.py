@@ -20,7 +20,6 @@ LETTERS = letter_filler()
 
 
 class NameSaver:
-
     def __init__(self, screen, score):
         self.screen = screen
         self.score = score
@@ -36,10 +35,10 @@ class NameSaver:
         font = pygame.font.Font(None, 36)
         clock = pygame.time.Clock()
 
-        name = ''
+        name = ""
         while True:
             self.screen.fill(BLACK)
-            self.draw_text('Enter your name using 5 letters:', font, (325, 270))
+            self.draw_text("Enter your name using 5 letters:", font, (325, 270))
             pygame.draw.rect(self.screen, WHITE, input_box, 3)
 
             # Render the current text.
@@ -52,9 +51,9 @@ class NameSaver:
                     exit()
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_RETURN and len(name) == 5:
-                        path = os.path.join('scores', 'scores.txt')
+                        path = os.path.join("scores", "scores.txt")
                         with open(path, "a") as f:
-                            f.write(f'{name} - {self.score}\n')
+                            f.write(f"{name} - {self.score}\n")
                         return
 
                     elif event.key == pygame.K_BACKSPACE:

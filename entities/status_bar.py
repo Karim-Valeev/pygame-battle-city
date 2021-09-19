@@ -7,7 +7,6 @@ WHITE = (255, 255, 255)
 
 
 class StatusBar(NonGameScreen):
-
     def __init__(self, screen, player=None):
         super().__init__(screen)
         if player is None:
@@ -36,18 +35,18 @@ class StatusBar(NonGameScreen):
         self.draw_text(f"HIGHSCORE: {self.highscore}", font, WHITE, (325, 25))
 
     def calculate_highscore(self):
-        path = os.path.join('scores', 'scores.txt')
+        path = os.path.join("scores", "scores.txt")
         if not os.path.exists(path):
-            with open(path, 'w') as f:
-                f.write('XXXXX - 0')
+            with open(path, "w") as f:
+                f.write("XXXXX - 0")
 
         filesize = os.path.getsize(path)
         if filesize == 0:
             return 0
 
-        with open(path, 'r') as f:
+        with open(path, "r") as f:
             scores = []
             for line in f:
-                score = int(line[8:(len(line) - 1)]) if len(line) > 8 else 0
+                score = int(line[8 : (len(line) - 1)]) if len(line) > 8 else 0
                 scores.append(score)
         return max(scores)
