@@ -6,6 +6,7 @@ FPS = 60
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 
+
 class Menu(NonGameScreen):
     def __init__(self, screen, status_bar):
         super().__init__(screen)
@@ -29,7 +30,6 @@ class Menu(NonGameScreen):
 
             self.draw_text("START", self.font, WHITE, (325, 270))
             self.draw_text("QUIT", self.font, WHITE, (325, 483))
-
 
             pygame.display.update()
 
