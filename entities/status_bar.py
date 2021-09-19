@@ -41,10 +41,13 @@ class StatusBar(NonGameScreen):
             with open(path, 'w') as f:
                 f.write('XXXXX - 0')
 
+        filesize = os.path.getsize(path)
+        if filesize == 0:
+            return 0
+
         with open(path, 'r') as f:
             scores = []
             for line in f:
                 score = int(line[8:(len(line) - 1)]) if len(line) > 8 else 0
-
                 scores.append(score)
         return max(scores)
